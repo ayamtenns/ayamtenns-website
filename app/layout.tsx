@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 import { Anton, Archivo_Black, Inter_Tight, JetBrains_Mono, Geist } from "next/font/google"
+import { Analytics } from "@vercel/analytics/next"
 import "./globals.css"
 import { cn } from "@/lib/utils";
 
@@ -46,7 +47,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       lang="en"
       className={cn(anton.variable, archivoBlack.variable, interTight.variable, jetbrainsMono.variable, "font-sans", geist.variable)}
     >
-      <body>{children}</body>
+      <body>
+        {children}
+        <Analytics />
+      </body>
     </html>
   )
 }

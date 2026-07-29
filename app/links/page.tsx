@@ -127,10 +127,21 @@ export default function LinksPage() {
         .foot .r{display:flex;justify-content:flex-end;gap:20px;color:var(--muted)}
 
         @media(max-width:880px){
-          .page{border-left:0;border-right:0;max-width:100% !important;margin:0 !important;width:100% !important}
+          .page{border-left:0;border-right:0;max-width:100% !important;margin:0 !important;width:100% !important;min-width:0}
           .head{grid-template-columns:1fr}
-          .head .L{border-right:0;border-bottom:var(--hair) solid var(--rule)}
+          /* Grid/flex children default to min-width:auto, so they refuse to
+             shrink below their text's intrinsic width. Without this the
+             wordmark forces the whole page wider than the viewport. */
+          .head, .head .L, .head .R{min-width:0}
+          .head .L{border-right:0;border-bottom:var(--hair) solid var(--rule);padding:32px 20px 26px}
           .head .R{padding:24px 20px}
+          /* 64px min was ~439px wide — wider than a 375px phone. */
+          .wordmark{font-size:clamp(34px, 11.5vw, 64px)}
+          .kicker{flex-wrap:wrap;gap:10px}
+          /* Two flex:1 spans split the row evenly and inflated it; let the
+             URL hug its own text instead. */
+          .indexcard ol li{gap:10px}
+          .indexcard ol li .pg{flex:0 0 auto;text-align:right}
           .row{grid-template-columns:60px 1fr 46px;padding:20px 18px;margin-left:-1px;margin-right:-1px}
           .row .arrow{margin-right:0}
           .row .body .title{font-size:18px}
@@ -171,7 +182,7 @@ export default function LinksPage() {
             <div className="indexcard">
               <h4>// Index</h4>
               <ol>
-                <li><b>01</b><span>Website Official</span><span className="pg">.app</span></li>
+                <li><b>01</b><span>Website Official</span><span className="pg">ayamtenns.com</span></li>
                 <li><b>02</b><span>GrabFood</span><span className="pg">grab.com</span></li>
                 <li><b>03</b><span>GoFood</span><span className="pg">gofood.co.id</span></li>
                 <li><b>04</b><span>WhatsApp</span><span className="pg">+62 …</span></li>
@@ -199,11 +210,11 @@ export default function LinksPage() {
         </div>
 
         <nav className="list">
-          <a className="row" href="https://ayamtenns-website-official.vercel.app" target="_blank" rel="noopener noreferrer">
+          <a className="row" href="https://ayamtenns.com" target="_blank" rel="noopener noreferrer">
             <span className="num">01</span>
             <div className="body">
               <div className="title">Website Official</div>
-              <div className="sub">ayamtenns-website-official.vercel.app</div>
+              <div className="sub">ayamtenns.com</div>
             </div>
             <div className="meta-r">
               <span>Order · Menu · Story</span>

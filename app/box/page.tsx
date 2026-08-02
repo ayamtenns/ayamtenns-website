@@ -48,7 +48,12 @@ function Bleed({ figure, priority = false }: { figure: Figure; priority?: boolea
         priority={priority}
         className="bx-bleed-img"
       />
-      {figure.caption && <figcaption>{figure.caption}</figcaption>}
+      {(figure.caption || figure.credit) && (
+        <figcaption>
+          {figure.caption}
+          {figure.credit && <span className="bx-credit">{figure.credit}</span>}
+        </figcaption>
+      )}
     </figure>
   )
 }
@@ -349,6 +354,14 @@ export default function BoxPage() {
           padding: 12px 24px 0;
           max-width: 640px;
           margin: 0 auto;
+        }
+        /* Attribution for photography we did not shoot ourselves. */
+        .bx-credit {
+          display: block;
+          margin-top: 4px;
+          font-size: 9px;
+          letter-spacing: .08em;
+          color: #0E0E0E59;
         }
         /* Inline figure — sits inside a section, tighter spacing */
         .bx-figure-inline { margin: 30px 0 0; }

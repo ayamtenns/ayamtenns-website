@@ -126,6 +126,15 @@ export interface Stat {
   label: string
 }
 
+// `tested: false` menampilkan penanda "belum diuji" di halaman. Jangan set
+// true sebelum benar-benar dicoba di dapur — itu janji ke pelanggan.
+export interface ReheatMethod {
+  name: string
+  setting: string
+  note?: string
+  tested: boolean
+}
+
 export interface Section {
   id: string
   kicker: string
@@ -139,19 +148,19 @@ export interface Section {
   bullets?: string[]      // daftar poin pendek
   figureAfter?: Figure
   figureInline?: Figure
-  reheatingPlaceholder?: string
+  reheatMethods?: ReheatMethod[]
   reheatingFinal?: string
 }
 
 export const SECTIONS: Section[] = [
   {
-    id: 'pilihan',
+    id: 'standar',
     kicker: 'Bagian satu',
-    heading: 'Ada pilihan yang lebih murah',
+    heading: 'Standarnya dimulai dari ayamnya',
     lead: true,
     paragraphs: [
-      'Setiap tempat ayam goreng menghadapi pilihan yang sama di awal: ambil ayam kelas foodservice yang lebih murah, atau bayar lebih untuk ayam kelas ritel — yang sama dengan yang dijual di supermarket.',
-      'Kami ambil yang lebih mahal. Halaman ini menjelaskan kenapa.',
+      'Kebanyakan tempat ayam goreng memakai ayam kelas foodservice. Kami tidak.',
+      'Ayam kami kelas ritel — mutu yang sama dengan yang dijual di supermarket, dari peternakan yang bisa kami sebut namanya. Halaman ini menjelaskan bedanya di mana.',
     ],
     figureAfter: FARM_IMAGE,
   },
@@ -206,7 +215,7 @@ export const SECTIONS: Section[] = [
     heading: 'Logikanya sederhana',
     pullQuote: 'Ayam yang tidak gampang sakit, tidak butuh banyak alasan untuk diobati.',
     paragraphs: [
-      'Kandang tertutup, penetasan sendiri, pakan sendiri — semuanya lebih mahal dibanding kandang terbuka dan pakan beli. Itu yang kami bayar.',
+      'Kandang tertutup, penetasan sendiri, pakan sendiri. Itu standar yang kami cari sebelum memilih pemasok — bukan harga termurah.',
     ],
     figureAfter: CHICK_IMAGE,
   },
@@ -257,7 +266,7 @@ export const SECTIONS: Section[] = [
     ],
     // Ditaruh sebagai pullQuote supaya muncul sesudah daftar di atas — ini
     // kalimat penutupnya, bukan pembuka.
-    pullQuote: 'Yang bisa kami pastikan: kami tahu ayam kami dari mana, dan kami memilih membayar lebih untuk itu.',
+    pullQuote: 'Yang bisa kami pastikan: kami tahu ayam kami dari mana, dan peternakannya kami pilih sendiri.',
   },
   {
     id: 'msg',
@@ -270,9 +279,31 @@ export const SECTIONS: Section[] = [
     id: 'reheat',
     kicker: 'Bagian sebelas',
     heading: 'Cara panasin ulang',
-    // PENTING: Angka suhu dan durasi BELUM diuji. Jangan isi sampai sudah benar-benar diverifikasi.
-    // Ganti `reheatingPlaceholder` setelah pengujian selesai.
-    reheatingPlaceholder: '[SUHU] · [DURASI] — belum diisi',
+    reheatMethods: [
+      {
+        // Sudah dicoba sendiri di dapur.
+        name: 'Oven',
+        setting: '170°C · 5–7 menit',
+        note: 'Untuk ayamnya saja.',
+        tested: true,
+      },
+      {
+        // BELUM diuji — angka rujukan umum untuk menghangatkan ayam goreng
+        // potongan kecil-sedang di air fryer. Ganti setelah dites sendiri.
+        name: 'Air fryer',
+        setting: '175°C · 4–6 menit',
+        note: 'Angka umum, bukan hasil tes kami. Cek di menit ke-4.',
+        tested: false,
+      },
+      {
+        // Set lengkap belum pernah dites. Jangan karang angkanya: nasi dan
+        // telur butuh perlakuan berbeda dari ayamnya.
+        name: 'Nashville Box',
+        setting: 'Belum kami tes',
+        note: 'Satu set nasi + telur + ayam: nasi dan telur beda perlakuan dari ayamnya. Kami tes dulu sebelum kasih angka.',
+        tested: false,
+      },
+    ],
     reheatingFinal: 'Jangan microwave. Serius.',
   },
 ]

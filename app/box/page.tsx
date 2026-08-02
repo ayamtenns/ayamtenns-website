@@ -383,21 +383,51 @@ export default function BoxPage() {
           margin-top: 4px;
           border: 2px solid var(--ink);
         }
-        .bx-reheat-slot {
-          display: block;
-          padding: 22px 20px;
+        .bx-method {
+          padding: 16px 18px;
+          border-bottom: 1px solid #0E0E0E1A;
+        }
+        .bx-method-top {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          margin-bottom: 6px;
+        }
+        .bx-method-name {
           font-family: "JetBrains Mono", ui-monospace, monospace;
-          font-size: 13px;
-          letter-spacing: .1em;
-          text-align: center;
+          font-size: 10px;
+          font-weight: 700;
+          letter-spacing: .16em;
+          text-transform: uppercase;
           color: #0E0E0E8C;
-          background:
-            repeating-linear-gradient(
-              45deg,
-              #0E0E0E08 0 8px,
-              transparent 8px 16px
-            );
-          border-bottom: 2px dashed #0E0E0E40;
+        }
+        /* Anything we have not cooked ourselves says so, plainly. */
+        .bx-untested {
+          font-family: "JetBrains Mono", ui-monospace, monospace;
+          font-size: 9px;
+          letter-spacing: .12em;
+          text-transform: uppercase;
+          color: var(--red);
+          border: 1px solid currentColor;
+          padding: 2px 6px;
+          line-height: 1;
+          white-space: nowrap;
+          flex-shrink: 0;
+        }
+        .bx-method-setting {
+          display: block;
+          font-family: "Archivo Black", system-ui, sans-serif;
+          font-size: 20px;
+          letter-spacing: -.02em;
+          color: var(--ink);
+        }
+        .bx-method-note {
+          display: block;
+          margin-top: 5px;
+          font-family: "Inter Tight", system-ui, sans-serif;
+          font-size: 13px;
+          line-height: 1.5;
+          color: #0E0E0EA6;
         }
         .bx-reheat-final {
           display: block;
@@ -647,9 +677,18 @@ export default function BoxPage() {
 
                   {s.note && <p className="bx-note">{s.note}</p>}
 
-                  {s.reheatingPlaceholder && (
+                  {s.reheatMethods && (
                     <div className="bx-reheat">
-                      <span className="bx-reheat-slot">{s.reheatingPlaceholder}</span>
+                      {s.reheatMethods.map((m) => (
+                        <div key={m.name} className="bx-method">
+                          <div className="bx-method-top">
+                            <span className="bx-method-name">{m.name}</span>
+                            {!m.tested && <span className="bx-untested">belum diuji</span>}
+                          </div>
+                          <strong className="bx-method-setting">{m.setting}</strong>
+                          {m.note && <span className="bx-method-note">{m.note}</span>}
+                        </div>
+                      ))}
                       <strong className="bx-reheat-final">{s.reheatingFinal}</strong>
                     </div>
                   )}

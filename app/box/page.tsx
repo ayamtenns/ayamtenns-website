@@ -7,6 +7,7 @@ import {
   OUTRO_IMAGE,
   PAGE_META,
   SECTIONS,
+  SOURCES,
   SPICE,
   WHATSAPP_NUMBER,
   type Figure,
@@ -234,6 +235,121 @@ export default function BoxPage() {
           border: 1.5px solid var(--ink);
           padding: 7px 12px;
           line-height: 1;
+        }
+
+        /* ─── stat block ──────────────────────────────────────────── */
+        .bx-stats {
+          margin-top: 28px;
+          border-top: 2px solid var(--ink);
+        }
+        .bx-stat {
+          display: grid;
+          /* wide enough that "11 hari" stays on one line */
+          grid-template-columns: 104px 1fr;
+          gap: 14px;
+          align-items: baseline;
+          padding: 16px 0;
+          border-bottom: 1px solid #0E0E0E1A;
+        }
+        .bx-stat dt {
+          font-family: "Archivo Black", system-ui, sans-serif;
+          font-size: 26px;
+          line-height: 1;
+          letter-spacing: -.03em;
+          color: var(--red);
+        }
+        .bx-stat dd {
+          font-family: "Inter Tight", system-ui, sans-serif;
+          font-size: 14px;
+          line-height: 1.5;
+          color: #0E0E0EBF;
+        }
+
+        /* ─── bullet list ─────────────────────────────────────────── */
+        .bx-bullets {
+          list-style: none;
+          margin-top: 22px;
+        }
+        .bx-bullets li {
+          position: relative;
+          padding-left: 20px;
+          margin-bottom: 10px;
+          font-family: "Inter Tight", system-ui, sans-serif;
+          font-size: 16px;
+          line-height: 1.6;
+          color: #0E0E0EE6;
+        }
+        .bx-bullets li::before {
+          content: '';
+          position: absolute;
+          left: 0;
+          top: .62em;
+          width: 8px;
+          height: 2px;
+          background: var(--red);
+        }
+
+        /* ─── sources ─────────────────────────────────────────────── */
+        .bx-sources {
+          margin-top: 52px;
+          padding: 30px 0 34px;
+          background: var(--ash);
+        }
+        .bx-sources h2 {
+          font-family: "JetBrains Mono", ui-monospace, monospace;
+          font-size: 11px;
+          letter-spacing: .2em;
+          text-transform: uppercase;
+          color: var(--ink);
+          margin-bottom: 8px;
+        }
+        .bx-sources > .bx-measure > p {
+          font-family: "Inter Tight", system-ui, sans-serif;
+          font-size: 14px;
+          line-height: 1.6;
+          color: #0E0E0EA6;
+          margin-bottom: 18px;
+        }
+        .bx-sources ol {
+          list-style: none;
+          counter-reset: src;
+        }
+        .bx-sources li {
+          counter-increment: src;
+          position: relative;
+          padding-left: 26px;
+          margin-bottom: 14px;
+        }
+        .bx-sources li::before {
+          content: counter(src);
+          position: absolute;
+          left: 0;
+          top: 1px;
+          font-family: "JetBrains Mono", ui-monospace, monospace;
+          font-size: 10px;
+          font-weight: 700;
+          color: var(--red);
+        }
+        .bx-sources a {
+          display: block;
+          font-family: "Inter Tight", system-ui, sans-serif;
+          font-size: 14px;
+          line-height: 1.45;
+          font-weight: 600;
+          color: var(--ink);
+          text-decoration: underline;
+          text-underline-offset: 2px;
+          /* long URLs must never widen the page */
+          overflow-wrap: anywhere;
+        }
+        .bx-sources span {
+          display: block;
+          margin-top: 2px;
+          font-family: "JetBrains Mono", ui-monospace, monospace;
+          font-size: 10px;
+          letter-spacing: .06em;
+          text-transform: uppercase;
+          color: #0E0E0E8C;
         }
 
         /* ─── pull quote ──────────────────────────────────────────── */
@@ -500,6 +616,25 @@ export default function BoxPage() {
                     </p>
                   ))}
 
+                  {s.stats && (
+                    <dl className="bx-stats">
+                      {s.stats.map((st) => (
+                        <div key={st.value} className="bx-stat">
+                          <dt>{st.value}</dt>
+                          <dd>{st.label}</dd>
+                        </div>
+                      ))}
+                    </dl>
+                  )}
+
+                  {s.bullets && (
+                    <ul className="bx-bullets">
+                      {s.bullets.map((b) => (
+                        <li key={b}>{b}</li>
+                      ))}
+                    </ul>
+                  )}
+
                   {s.pullQuote && <p className="bx-quote">{s.pullQuote}</p>}
 
                   {s.badges && (
@@ -552,6 +687,24 @@ export default function BoxPage() {
             </div>
           </section>
         </article>
+
+        {/* ─── sumber ─── */}
+        <section className="bx-sources" aria-labelledby="h-sources">
+          <div className="bx-measure">
+            <h2 id="h-sources">{SOURCES.heading}</h2>
+            <p>{SOURCES.intro}</p>
+            <ol>
+              {SOURCES.items.map((src) => (
+                <li key={src.url}>
+                  <a href={src.url} target="_blank" rel="noopener noreferrer">
+                    {src.label}
+                  </a>
+                  <span>{src.detail}</span>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </section>
 
         {/* ─── outro ─── */}
         <section className="bx-outro" aria-labelledby="h-outro">

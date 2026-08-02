@@ -119,8 +119,13 @@ export const HERO = {
   body: 'Kamu baru saja makan ayam dari peternakan yang bisa kami sebut namanya.',
 }
 
-// ─── Bagian 1–6 ───────────────────────────────────────────────────────────────
+// ─── Isi artikel ──────────────────────────────────────────────────────────────
 // `figureAfter` menempelkan gambar full-bleed setelah bagian tersebut.
+export interface Stat {
+  value: string
+  label: string
+}
+
 export interface Section {
   id: string
   kicker: string
@@ -130,6 +135,8 @@ export interface Section {
   badges?: string[]
   note?: string
   pullQuote?: string      // kalimat ditonjolkan besar
+  stats?: Stat[]          // angka yang ditonjolkan (harus ada sumbernya di SOURCES)
+  bullets?: string[]      // daftar poin pendek
   figureAfter?: Figure
   figureInline?: Figure
   reheatingPlaceholder?: string
@@ -138,84 +145,130 @@ export interface Section {
 
 export const SECTIONS: Section[] = [
   {
-    id: 'asal',
+    id: 'pilihan',
     kicker: 'Bagian satu',
-    heading: 'Ayamnya dari mana',
+    heading: 'Ada pilihan yang lebih murah',
     lead: true,
     paragraphs: [
-      'Kami pakai ayam Pollo®, produksi PT Cibadak Indah Sari Farm — peternakan unggas terpadu yang sudah beroperasi sejak 1975.',
-      'Ayam yang sama yang dijual di supermarket. Bukan ayam kelas foodservice yang lebih murah.',
+      'Setiap tempat ayam goreng menghadapi pilihan yang sama di awal: ambil ayam kelas foodservice yang lebih murah, atau bayar lebih untuk ayam kelas ritel — yang sama dengan yang dijual di supermarket.',
+      'Kami ambil yang lebih mahal. Halaman ini menjelaskan kenapa.',
     ],
-    badges: ['NKV', 'Halal', 'HACCP'],
     figureAfter: FARM_IMAGE,
   },
   {
-    // Fakta di bagian ini bersumber dari cibadak.com/our-company & /our-products.
-    // Jangan tambah klaim yang tidak ada di sana.
-    id: 'terpadu',
+    // Sumber: Permentan No. 14/2017 Pasal 16 (berlaku 1 Januari 2018).
+    // Angka di `stats` dari studi longitudinal peternakan broiler Jawa Barat,
+    // Poultry Science 2025 — lihat SOURCES di bawah. Jangan ubah angka tanpa
+    // memeriksa ulang sumbernya.
+    id: 'industri',
     kicker: 'Bagian dua',
-    heading: 'Satu perusahaan, dari telur sampai potong',
+    heading: 'Yang sebenarnya terjadi di industri ayam',
     paragraphs: [
-      'Cibadak berdiri tahun 1975 di Tangerang dan menjalankan sendiri seluruh rantainya: peternakan indukan, penetasan, pabrik pakan, sampai kandang broiler.',
-      'Artinya ayam yang kami goreng tidak berpindah-pindah tangan sebelum sampai ke dapur kami.',
+      'Sejak 1 Januari 2018, pemerintah melarang antibiotik pemacu pertumbuhan di pakan ternak. Aturan itu berlaku untuk semua peternak di Indonesia — jadi "tanpa antibiotik pemacu pertumbuhan" bukan keistimewaan siapa pun.',
+      'Tapi antibiotik untuk pencegahan masih boleh. Dan di situ ceritanya belum selesai. Sebuah studi di peternakan broiler Jawa Barat menemukan pola ini:',
+    ],
+    stats: [
+      { value: '80%', label: 'antibiotik dipakai untuk pencegahan — diberikan ke ayam yang tidak sedang sakit' },
+      { value: '11 hari', label: 'rata-rata pemberian antibiotik dalam satu siklus hidup 30 hari' },
+      { value: '6,2', label: 'rata-rata jumlah antibiotik yang sudah tidak mempan pada bakteri dari peternakan itu' },
+    ],
+  },
+  {
+    id: 'kenapa',
+    kicker: 'Bagian tiga',
+    heading: 'Kenapa peternakan melakukannya',
+    paragraphs: [
+      'Broiler dipanen umur 30–35 hari. Dalam waktu sesingkat itu, dipelihara padat, satu wabah bisa menghabiskan seisi kandang. Antibiotik pencegahan jadi asuransi yang murah.',
+      'Ini bukan soal peternak jahat. Ini soal kandang yang bikin ayam gampang sakit — lalu obatnya dipakai untuk menutupi itu.',
+    ],
+    pullQuote: 'Jadi kami cari peternakan yang menghilangkan alasannya sejak awal.',
+  },
+  {
+    // Semua fakta di bawah dari cibadak.com/our-company & /our-products.
+    id: 'peternakan',
+    kicker: 'Bagian empat',
+    heading: 'Peternakan yang kami pilih',
+    paragraphs: [
+      'Ayam kami dari PT Cibadak Indah Sari Farm — berdiri 1975 di Tangerang, dan menjalankan sendiri seluruh rantainya: peternakan indukan, penetasan, pabrik pakan, sampai kandang broiler.',
+      'Seluruh kandang broiler mereka sudah tertutup sejak 2011, dengan pengatur suhu dan sirkulasi otomatis, ditambah prosedur biosecurity ketat di seluruh fasilitas.',
+    ],
+    bullets: [
+      'Ayam tidak kepanasan',
+      'Tidak berdesakan di kandang terbuka',
+      'Tidak ketemu unggas liar pembawa penyakit',
+    ],
+    badges: ['NKV', 'Halal', 'HACCP'],
+    figureAfter: CLOSED_HOUSE_IMAGE,
+  },
+  {
+    id: 'logika',
+    kicker: 'Bagian lima',
+    heading: 'Logikanya sederhana',
+    pullQuote: 'Ayam yang tidak gampang sakit, tidak butuh banyak alasan untuk diobati.',
+    paragraphs: [
+      'Kandang tertutup, penetasan sendiri, pakan sendiri — semuanya lebih mahal dibanding kandang terbuka dan pakan beli. Itu yang kami bayar.',
     ],
     figureAfter: CHICK_IMAGE,
   },
   {
-    id: 'kandang',
-    kicker: 'Bagian tiga',
-    heading: 'Kandang tertutup, iklim diatur',
+    // Sumber pakan: cibadak.com (pabrik pakan sendiri + lab mikrobiologi/serologi).
+    // Konteks prebiotik/probiotik sebagai pengganti AGP pasca-2018: Medion,
+    // Poultry Indonesia. Efek "sederhana tapi nyata": meta-analisis Frontiers
+    // in Animal Science 2025 — jangan dibesar-besarkan.
+    id: 'pakan',
+    kicker: 'Bagian enam',
+    heading: 'Pakannya',
     paragraphs: [
-      'Seluruh kandang broiler mereka sudah closed house sejak 2011, dengan pengatur suhu dan sirkulasi otomatis.',
-      'Ayam tidak kepanasan, tidak berdesakan di kandang terbuka, dan tidak terpapar unggas liar. Mereka juga menerapkan prosedur biosecurity ketat di seluruh fasilitas.',
+      'Pakan broiler biasa isinya jagung, bungkil kedelai, dedak, dan tepung ikan. Pakan yang dipakai di sini ditambah prebiotik dan probiotik — bakteri baik dan "makanan" untuk bakteri itu.',
+      'Ini justru muncul karena larangan 2018 tadi: setelah antibiotik pemacu pertumbuhan dilarang, industri mencari cara lain menjaga pencernaan ayam. Pakannya digiling di pabrik mereka sendiri, dan mereka punya laboratorium sendiri untuk uji mikrobiologi dan serologi.',
     ],
-    figureAfter: CLOSED_HOUSE_IMAGE,
+    note: 'Sejujurnya: efek prebiotik dan probiotik pada ayam itu nyata tapi sederhana, bukan keajaiban. Dan ini soal cara ayamnya dibesarkan — bukan berarti dagingnya mengandung probiotik.',
+    figureAfter: FEED_MILL_IMAGE,
   },
   {
     id: 'antibiotik',
-    kicker: 'Bagian empat',
-    heading: 'Tanpa antibiotik',
+    kicker: 'Bagian tujuh',
+    heading: 'Soal klaim tanpa antibiotik',
     paragraphs: [
-      'Pollo membesarkan ayamnya tanpa antibiotik — klaim yang produsennya sendiri cantumkan di kemasan ritel mereka.',
+      'Pollo mencantumkan klaim "tanpa antibiotik" di kemasan ritel mereka sendiri. Kami mengutip klaim produsennya — bukan hasil uji laboratorium kami.',
     ],
     figureInline: WRAPPER_IMAGE,
   },
   {
-    id: 'pakan',
-    kicker: 'Bagian lima',
-    heading: 'Pakan prebiotik & probiotik',
-    paragraphs: [
-      'Pakannya mengandung prebiotik dan probiotik, supaya pencernaan ayam lebih sehat. Hasilnya daging yang lebih padat dan tidak berbau amis.',
-      // Sumber: cibadak.com — pabrik pakan sendiri (Jumbo® Feed) + laboratorium
-      // uji mikrobiologi dan serologi.
-      'Pakannya digiling di pabrik mereka sendiri, dan mereka punya laboratorium sendiri untuk uji mikrobiologi dan serologi.',
-    ],
-    note: 'Ini soal cara ayamnya dibesarkan — bukan berarti dagingnya mengandung probiotik.',
-    figureAfter: FEED_MILL_IMAGE,
-  },
-  {
     id: 'terlacak',
-    kicker: 'Bagian enam',
+    kicker: 'Bagian delapan',
     heading: 'Sumber terlacak',
     paragraphs: [
-      'Satu peternakan, bukan campuran dari beberapa pemasok pasar.',
-      // Sumber: cibadak.com/our-products — "trace through out the production
-      // process", QC di titik-titik kritis dengan sistem kontrol terpusat.
-      'Cibadak melacak ayamnya di sepanjang proses produksi, dengan tim QC di titik-titik kritis.',
+      'Satu peternakan, bukan campuran dari beberapa pemasok pasar. Cibadak melacak ayamnya di sepanjang proses produksi, dengan tim QC di titik-titik kritis.',
     ],
     pullQuote: 'Kami bisa menyebut asalnya karena kami memang tahu.',
     figureAfter: FLOCK_IMAGE,
   },
   {
+    // Bagian ini sengaja ada. Jangan dihapus untuk "merapikan" halaman —
+    // justru ini yang bikin bagian lain layak dipercaya.
+    id: 'jujur',
+    kicker: 'Bagian sembilan',
+    heading: 'Yang tidak bisa kami klaim',
+    bullets: [
+      'Kami tidak menguji sendiri daging kami di laboratorium.',
+      'Larangan antibiotik pemacu pertumbuhan berlaku untuk semua peternak sejak 2018 — itu bukan keistimewaan kami.',
+      'Kami tidak tahu isi kandang pemasok lain, dan tidak akan mengarang soal itu.',
+    ],
+    // Ditaruh sebagai pullQuote supaya muncul sesudah daftar di atas — ini
+    // kalimat penutupnya, bukan pembuka.
+    pullQuote: 'Yang bisa kami pastikan: kami tahu ayam kami dari mana, dan kami memilih membayar lebih untuk itu.',
+  },
+  {
     id: 'msg',
-    kicker: 'Bagian tujuh',
+    kicker: 'Bagian sepuluh',
     heading: 'Tanpa MSG',
     pullQuote: 'Rasa datang dari bumbu, bukan penguat rasa.',
     figureAfter: TRACE_IMAGE,
   },
   {
     id: 'reheat',
-    kicker: 'Bagian delapan',
+    kicker: 'Bagian sebelas',
     heading: 'Cara panasin ulang',
     // PENTING: Angka suhu dan durasi BELUM diuji. Jangan isi sampai sudah benar-benar diverifikasi.
     // Ganti `reheatingPlaceholder` setelah pengujian selesai.
@@ -224,16 +277,51 @@ export const SECTIONS: Section[] = [
   },
 ]
 
-// ─── Bagian 7: Level pedas ─────────────────────────────────────────────────────
+// ─── Level pedas ──────────────────────────────────────────────────────────────
 // Lvl 3 Hot dan Lvl 4 X-Hot akan ditambahkan nanti.
 // Keduanya BELUM ada di dapur — jangan tampilkan sampai siap.
 export const SPICE = {
-  kicker: 'Bagian sembilan',
+  kicker: 'Bagian dua belas',
   heading: 'Level pedas',
   levels: [
     { label: 'Lvl 0', name: 'No Spicy' },
     { label: 'Lvl 1', name: 'Mild' },
     { label: 'Lvl 2', name: 'Medium' },
+  ],
+}
+
+// ─── Sumber ───────────────────────────────────────────────────────────────────
+// Setiap angka dan klaim regulasi di halaman ini harus bisa ditelusuri ke sini.
+// Kalau menambah klaim baru, tambahkan sumbernya — atau jangan ditulis.
+export const SOURCES = {
+  heading: 'Sumber',
+  intro: 'Angka dan aturan di halaman ini bisa kamu cek sendiri:',
+  items: [
+    {
+      label: 'Larangan antibiotik pemacu pertumbuhan (AGP), berlaku 1 Januari 2018',
+      detail: 'Permentan No. 14/2017 Pasal 16 — Ditjen PKH, Kementerian Pertanian',
+      url: 'https://ditjenpkh.pertanian.go.id/berita/734-berdampak-negatif-bagi-kesehatan-pemerintah-larang-penggunakan-agp-pada-ternak',
+    },
+    {
+      label: 'Pola pemakaian antibiotik & resistensi di peternakan broiler Jawa Barat',
+      detail: 'Poultry Science, 2025',
+      url: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC12681536/',
+    },
+    {
+      label: 'Prebiotik & probiotik sebagai pengganti AGP',
+      detail: 'Medion — Mencari Alternatif Pengganti AGP',
+      url: 'https://www.medion.co.id/mencari-alternatif-pengganti-agp/',
+    },
+    {
+      label: 'Seberapa besar efek probiotik pada broiler',
+      detail: 'Meta-analisis, Frontiers in Animal Science, 2025',
+      url: 'https://www.frontiersin.org/journals/animal-science/articles/10.3389/fanim.2025.1679614/full',
+    },
+    {
+      label: 'Profil peternakan, pabrik pakan, dan keterlacakan',
+      detail: 'PT Cibadak Indah Sari Farm',
+      url: 'https://cibadak.com/our-company/',
+    },
   ],
 }
 

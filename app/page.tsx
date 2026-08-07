@@ -1246,18 +1246,19 @@ function DipjoySection() {
 const PROMISES = [
   {
     no: "Promise 01",
-    title: "Sumber\nTerpercaya",
-    body: "Ayam dari peternakan terpadu bersertifikat NKV. Satu pemasok, bukan campuran dari pasar. Pemasok yang sama sejak hari pertama.",
+    title: "Raised\nRight",
+    body: "Ayam dari peternakan terpadu bersertifikat NKV. Satu pemasok sejak hari pertama, bukan campuran dari pasar.",
   },
   {
     no: "Promise 02",
-    title: "Sumber\nTerlacak",
-    body: "Kami tahu ayam kami dari mana, dan bisa menyebutkan asalnya. Bukan campuran dari beberapa pemasok.",
+    title: "Fried\nHot",
+    // TODO(copy): konfirmasi proses cayenne sebelum melengkapi body ini.
+    body: "Digoreng saat pesanan masuk, tidak pernah sebelumnya. [TODO: konfirmasi proses cayenne sebelum diisi]",
   },
   {
     no: "Promise 03",
     title: "Consistent\nor Nothing",
-    body: "If it doesn't meet our standard, it doesn't leave our kitchen. Every order. Every time.",
+    body: "Kalau tidak memenuhi standar kami, tidak keluar dari dapur. Setiap pesanan. Setiap kali.",
   },
 ]
 

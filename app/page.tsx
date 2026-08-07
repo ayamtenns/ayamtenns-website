@@ -1252,8 +1252,8 @@ const PROMISES = [
   {
     no: "Promise 02",
     title: "Fried\nHot",
-    // TODO(copy): konfirmasi proses cayenne sebelum melengkapi body ini.
-    body: "Digoreng saat pesanan masuk, tidak pernah sebelumnya. [TODO: konfirmasi proses cayenne sebelum diisi]",
+    // Bagian cayenne sengaja belum ditulis — prosesnya belum dikonfirmasi.
+    body: "Digoreng saat pesanan masuk, tidak pernah sebelumnya.",
   },
   {
     no: "Promise 03",

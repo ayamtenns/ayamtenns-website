@@ -52,7 +52,8 @@ const BOX_ITEMS = [
   {
     badge: "Box · 03",
     name: "Nashville Box · Meltdown",
-    desc: "Our hottest build. Deep cayenne lacquer, maximum heat. Finish with white cheese Dipjoy — if you can handle it.",
+    // TODO(copy): Meltdown = varian bumbu keju, BUKAN level pedas tertinggi.
+    desc: "[TODO: deskripsi Meltdown — varian bumbu keju, diisi manual]",
     priceR: "49", priceL: "55",
     imgSrc: "/images/Nashville Box Meltdown.png",
     heat: 3,
@@ -79,7 +80,8 @@ const SANDO_ITEMS = [
   {
     badge: "Sando · 02",
     name: "Sando · Meltdown",
-    desc: "Our hottest sandwich. Maximum heat lacquer on a sesame brioche. Proceed with confidence.",
+    // TODO(copy): Meltdown = varian bumbu keju, BUKAN level pedas tertinggi.
+    desc: "[TODO: deskripsi Meltdown — varian bumbu keju, diisi manual]",
     priceR: "56", priceL: "65",
     imgSrc: "/images/Meltdown Sando.png",
     heat: 3,
@@ -188,8 +190,8 @@ const SAUCES = [
 ]
 
 const TICKER_ITEMS = [
-  "HORMONE FREE", "ANTIBIOTIC FREE", "NO MSG", "NO STEROIDS", "NO FORMALIN",
-  "EST. 2020", "BSD CITY", "NASHVILLE HOT CHICKEN", "CLEAN SOURCE", "NO SHORTCUTS", "RAISED RIGHT",
+  "ANTIBIOTIC FREE", "NO MSG", "NKV CERTIFIED", "TRACEABLE SOURCE",
+  "RAISED RIGHT", "NO SHORTCUTS", "EST. 2020", "BSD CITY", "NASHVILLE HOT CHICKEN",
 ]
 
 const MENU_TABS = [
@@ -491,7 +493,7 @@ function HeroSection() {
           fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.12em",
           fontFamily: MONO, marginBottom: "24px",
         }}>
-          <span style={{ opacity: 0.75 }}>◉ NO MSG · NO HORMONE · NO ANTIBIOTIC</span>
+          <span style={{ opacity: 0.75 }}>◉ NO MSG · NO ANTIBIOTIC · NKV CERTIFIED</span>
           <span style={{
             display: "inline-flex", alignItems: "center", gap: "8px",
             padding: "6px 10px", border: HAIR, fontWeight: 700, fontSize: "11px",
@@ -503,26 +505,27 @@ function HeroSection() {
         {/* Giant headline — mixed stroke/fill as per design spec */}
         <h1 style={{
           fontFamily: ARCH,
-          fontSize: "clamp(40px, 7vw, 130px)",
+          // Was clamp(40px, 7vw, 130px) for "Your daily / craving / nashville
+          // chicken." The new headline has longer words, so the old scale broke
+          // each line in two. Reduced just enough to hold the two-line structure.
+          fontSize: "clamp(34px, 5.2vw, 100px)",
           lineHeight: 0.84,
           letterSpacing: "-0.02em",
           textTransform: "uppercase",
           minWidth: 0,
         }}>
           <span style={{ display: "block" }}>
-            <TextEffect preset="slide" per="word" as="span" delay={0.3}>Your daily</TextEffect>
+            <TextEffect preset="slide" per="word" as="span" delay={0.3}>Raised right.</TextEffect>
           </span>
           <span style={{ display: "block", WebkitTextStroke: `2px ${INK}`, color: "transparent" }}>
-            craving{" "}
+            Fried{" "}
             <span style={{
               display: "inline-block", color: RED,
               transform: "translateY(-0.06em)", padding: "0 0.05em",
             }}>
               /
-            </span>
-          </span>
-          <span style={{ display: "block" }}>
-            <span style={{ color: RED }}>nashville</span> chicken.
+            </span>{" "}
+            <span style={{ WebkitTextStroke: "0", color: RED }}>hot.</span>
           </span>
         </h1>
 
@@ -536,7 +539,7 @@ function HeroSection() {
           </span>
           <p style={{ fontFamily: INTER, fontSize: "14px", lineHeight: 1.6, color: "rgba(14,14,14,0.7)" }}>
             Crispy outside. Clean inside.<br />
-            No hormones. No antibiotics. No MSG.<br />
+            Antibiotic free. No MSG. NKV certified source.<br />
             <strong style={{ fontWeight: 800, color: INK }}>Just Nashville hot chicken — done properly.</strong>
           </p>
           <span style={{ fontFamily: MONO, fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.14em", fontWeight: 700, opacity: 0.5 }}>
@@ -1243,13 +1246,13 @@ function DipjoySection() {
 const PROMISES = [
   {
     no: "Promise 01",
-    title: "Clean\nSource",
-    body: "Chicken raised without hormones, antibiotics, or steroids. Nothing added. Nothing hidden.",
+    title: "Sumber\nTerpercaya",
+    body: "Ayam dari peternakan terpadu bersertifikat NKV. Satu pemasok, bukan campuran dari pasar. Pemasok yang sama sejak hari pertama.",
   },
   {
     no: "Promise 02",
-    title: "Radical\nTransparency",
-    body: "Every step from farm to box is designed to be traceable, clean, and something you can trust.",
+    title: "Sumber\nTerlacak",
+    body: "Kami tahu ayam kami dari mana, dan bisa menyebutkan asalnya. Bukan campuran dari beberapa pemasok.",
   },
   {
     no: "Promise 03",
@@ -1799,7 +1802,7 @@ function Footer() {
               <br />BSD City, Indonesia
             </p>
             <p style={{ fontFamily: INTER, fontStyle: "italic", fontSize: "0.78rem", color: "rgba(255,255,255,0.16)", marginTop: "0.5rem" }}>
-              "Your daily craving nashville chicken"
+              "Raised right. Fried hot."
             </p>
             <div style={{ display: "flex", gap: "8px", marginTop: "1.5rem", flexWrap: "wrap" }}>
               {[

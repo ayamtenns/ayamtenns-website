@@ -45,8 +45,9 @@ function PatternSvg({ width, height, density = 'medium', accent = '#D91C1C', wor
   const { fontSize, rowSpacing, amp, wavelength: wl, strokeWidth } = cfg
   const rows = Math.ceil((height + rowSpacing * 2) / rowSpacing) + 1
   const WORDS: Word[] = words ?? [
-    { text: 'AYAMTENNS',          solid: true  },
-    { text: 'YOUR DAILY CRAVING', solid: false },
+    { text: 'AYAMTENNS',    solid: true  },
+    { text: 'RAISED RIGHT', solid: false },
+    { text: 'FRIED HOT',    solid: false },
   ]
 
   const renderRow = (i: number) => {

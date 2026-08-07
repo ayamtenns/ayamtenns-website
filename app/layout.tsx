@@ -38,7 +38,7 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: "AYAMTENNS — Nashville Hot Chicken",
   description:
-    "Your daily craving nashville chicken. Authentic Nashville Hot Chicken based in BSD City, Indonesia.",
+    "Nashville hot chicken. Raised right, fried hot. BSD City, Indonesia.",
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

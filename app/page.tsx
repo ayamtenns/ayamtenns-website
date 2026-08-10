@@ -184,9 +184,10 @@ const SAUCES = [
   { name: "Comeback\nSauce", no: "No. 01", color: "#C4402A" },
   { name: "Honey\nMustard", no: "No. 02", color: "#E4B429" },
   { name: "Fancy\nRanch", no: "No. 03", color: "#F2F0E4" },
-  { name: "Smokin'\nSauce", no: "No. 04", color: "#7C3A1E" },
-  { name: "White\nCheese", no: "No. 05", color: "#F4E4B8" },
-  { name: "Roasted\nGarlic", no: "No. 06", color: "#D9C48C" },
+  // Smokin' Sauce dihentikan. Dua item di bawah dinomori ulang supaya
+  // urutannya tidak bolong (dulu No. 05 dan No. 06).
+  { name: "White\nCheese", no: "No. 04", color: "#F4E4B8" },
+  { name: "Roasted\nGarlic", no: "No. 05", color: "#D9C48C" },
 ]
 
 const TICKER_ITEMS = [
@@ -732,7 +733,7 @@ function HeroSection() {
         <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)" }}>
           {[
             { k: "// Box flavors", v: "04" },
-            { k: "// Dipjoy sauces", v: "06" },
+            { k: "// Dipjoy sauces", v: "05" },
             { k: "// Heat levels", v: "03" },
           ].map(({ k, v }, i) => (
             <div key={k} style={{
@@ -1200,7 +1201,7 @@ function DipjoySection() {
             <em style={{ fontStyle: "normal", color: RED }}>Dipjoy</em> — flavorful dips, every time.
           </h3>
           <div style={{ fontFamily: MONO, fontSize: "11px", letterSpacing: "0.1em", textTransform: "uppercase", textAlign: "right", lineHeight: 1.5, color: "rgba(14,14,14,0.55)" }}>
-            Six house sauces
+            Five house sauces
             <br />Made in-kitchen
             <br />+Rp 0 with combos
           </div>

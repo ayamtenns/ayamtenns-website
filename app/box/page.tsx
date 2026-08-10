@@ -96,7 +96,16 @@ export default function BoxPage() {
           letter-spacing: .16em;
           text-transform: uppercase;
         }
-        .bx-masthead .brand { font-weight: 700; color: var(--ink); }
+        .bx-masthead .brand {
+          font-weight: 700;
+          color: var(--ink);
+          text-decoration: none;
+          /* Negative margin cancels the padding, so the hit area grows to a
+             thumb-friendly size without shifting the masthead visually. */
+          margin: -12px -14px;
+          padding: 12px 14px;
+        }
+        .bx-masthead .brand:active { color: var(--red); }
         .bx-masthead .loc { color: #0E0E0E80; }
 
         /* ─── hero ────────────────────────────────────────────────── */
@@ -607,7 +616,11 @@ export default function BoxPage() {
       <div className="bx-article">
 
         <header className="bx-masthead">
-          <span className="brand">Ayamtenns</span>
+          {/* Only route back to the rest of the site — a QR scan lands here
+              with no other way out. Plain <a> keeps the page zero-JS. */}
+          <a href="/" className="brand" aria-label="Ke halaman utama Ayamtenns">
+            Ayamtenns
+          </a>
           <span className="loc">BSD City · Indonesia</span>
         </header>
 

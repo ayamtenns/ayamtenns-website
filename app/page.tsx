@@ -427,6 +427,7 @@ function Navbar() {
           { label: "Menu", href: "#menu" },
           { label: "Combos", href: "#combos" },
           { label: "Dipjoy", href: "#dipjoy" },
+          { label: "Story", href: "/story" },
           { label: "Find Us", href: "#location" },
         ].map(({ label, href }) => (
           <motion.a

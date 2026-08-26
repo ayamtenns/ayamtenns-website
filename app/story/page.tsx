@@ -95,20 +95,27 @@ export default function StoryPage() {
           z-index: 50;
           height: var(--bar-h);
           display: grid;
-          grid-template-columns: var(--bar-h) 1fr 1fr;
+          grid-template-columns: auto 1fr 1fr;
           background: var(--ink);
           border-bottom: 1px solid var(--ink);
         }
         .st-home {
+          padding: 0 14px;
           border-right: 1px solid rgba(255,255,255,.22);
         }
-        /* Whiten the red mark so it sits with the bar's text rather than
-           fighting it on near-black. */
+        /* The full wordmark, not the icon — an 18px chicken was too small to
+           register as "go home". Whitened so it sits with the bar's text
+           instead of fighting it on near-black. */
         .st-home img {
-          width: 18px; height: auto;
+          height: 15px;
+          width: auto;
           filter: brightness(0) invert(1);
         }
-        .st-home:active img { filter: none; }
+        .st-home:active { background: var(--red); }
+        @media (min-width: 480px) {
+          .st-home { padding: 0 18px; }
+          .st-home img { height: 17px; }
+        }
         .st-bar a {
           display: flex;
           align-items: center;
@@ -576,7 +583,7 @@ export default function StoryPage() {
               in practice nobody finds it — this is the only route home that is
               on screen the whole time. */}
           <a className="st-home" href="/" aria-label="Ke halaman utama Ayamtenns">
-            <img src="/images/ayam.svg" alt="" width={18} height={26} />
+            <img src="/images/wordmark.png" alt="" width={938} height={220} />
           </a>
           <a href="#panasin">{QUICK_BAR.reheat}</a>
           <a href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" rel="noopener noreferrer">

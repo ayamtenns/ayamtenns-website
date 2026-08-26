@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import SupplyChain from './SupplyChain'
+import Reveal from './Reveal'
 import {
   CLAIMS,
   HERO,
@@ -44,15 +45,31 @@ export default function StoryPage() {
           --ink: #1A1A1A;
           --paper: #FFFFFF;
 
-          /* Duotone knobs — tune these, not the photo.
-             strength = how much red bleeds through
-             contrast/bright = shape the midtones
-             shadow = how far the darks crush toward black */
-          --duo-red: #D91C1C;
-          --duo-strength: 1;
-          --duo-contrast: 1.25;
-          --duo-bright: 1.05;
+          /* Photo grade — tune these, not the file. The photo stays itself:
+             its own colour, its own red comb. We only push contrast, sink the
+             backdrop to black, and lay a thin red wash over the midtones so it
+             sits in the same key as the rest of the page.
+               contrast/bright  shape the tones
+               sat              keep the comb's red honest (1 = untouched)
+               grade-strength   the red wash; keep it low, this is a tint not
+                                a duotone. 0 turns it off entirely.
+               shadow           how hard the dark backdrop crushes to black */
+          --photo-contrast: 1.22;
+          --photo-bright: 0.94;
+          --photo-sat: 1.06;
+          --grade-red: #D91C1C;
+          --grade-strength: 0.14;
           --duo-shadow: 0.55;
+
+          /* Framing knobs, per orientation.
+             Portrait: the photo is barely taller than the viewport, so almost
+             nothing crops vertically and the empty backdrop above the bird
+             stays in frame — zoom past 1 to push it out.
+             Landscape: cover already crops a lot vertically, so zoom would cut
+             the head off; leave it at 1 and aim with --duo-focus instead. */
+          --duo-zoom: 1.22;
+          --duo-origin: center 64%;
+          --duo-focus: center 50%;
 
           --bar-h: 46px;
 
@@ -107,19 +124,42 @@ export default function StoryPage() {
           background: var(--ink);
           overflow: hidden;
         }
-        .st-hero-media { position: absolute; inset: 0; background: var(--duo-red); }
+        /* Black plate, not red — the backdrop should read as real black behind
+           the bird rather than a coloured field. */
+        .st-hero-media { position: absolute; inset: 0; background: var(--ink); }
+        /* Thin red wash. soft-light tints the midtones and leaves the blacks
+           and the comb's own red alone; a full overlay would flatten both. */
+        .st-hero-media::before {
+          content: '';
+          position: absolute; inset: 0;
+          z-index: 1;
+          background: var(--grade-red);
+          mix-blend-mode: soft-light;
+          opacity: var(--grade-strength);
+          pointer-events: none;
+        }
         .st-hero-media img {
           width: 100%; height: 100%;
           object-fit: cover;
-          /* Duotone: strip colour, then let luminosity ride on the red plate. */
-          filter: grayscale(1) contrast(var(--duo-contrast)) brightness(var(--duo-bright));
-          mix-blend-mode: luminosity;
-          opacity: var(--duo-strength);
+          /* The photo keeps its own colour. Contrast lifts the white feathers
+             off the backdrop and sinks the backdrop toward black. */
+          filter:
+            contrast(var(--photo-contrast))
+            brightness(var(--photo-bright))
+            saturate(var(--photo-sat));
+          transform: scale(var(--duo-zoom));
+          transform-origin: var(--duo-origin);
+          object-position: var(--duo-focus);
+        }
+        /* Wide/landscape viewports crop plenty on their own. */
+        @media (min-aspect-ratio: 1/1) {
+          .st { --duo-zoom: 1; --duo-focus: center 30%; }
         }
         /* Crush the darks + keep the headline legible over any photo. */
         .st-hero-media::after {
           content: '';
           position: absolute; inset: 0;
+          z-index: 2; /* legibility scrim sits above the grade */
           background: linear-gradient(
             to top,
             rgba(26,26,26,.92) 0%,
@@ -129,6 +169,7 @@ export default function StoryPage() {
         }
         .st-hero-text {
           position: relative;
+          z-index: 3; /* above the grade (1) and the scrim (2) */
           width: 100%;
           padding: 0 16px 40px;
         }
@@ -145,6 +186,21 @@ export default function StoryPage() {
           font-family: "Inter Tight", system-ui, sans-serif;
           font-size: 14px;
           color: rgba(255,255,255,.72);
+        }
+
+        /* Hero entrance — pure CSS so it runs at first paint with no JS and
+           no flash. Wipes, never fades: hard edges match the page. */
+        @keyframes st-wipe { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0); } }
+        .st-hero h1 { animation: st-wipe .8s cubic-bezier(.65,0,.35,1) both; }
+        .st-hero p  { animation: st-wipe .5s cubic-bezier(.65,0,.35,1) .55s both; }
+
+        /* Generic reveal: visible by default, JS arms it only where it means
+           to animate (see Reveal.tsx). */
+        [data-wipe="armed"] { clip-path: inset(0 100% 0 0); }
+        [data-wipe="run"] {
+          clip-path: inset(0);
+          transition: clip-path .6s cubic-bezier(.65,0,.35,1);
+          transition-delay: calc(var(--i, 0) * .1s);
         }
 
         /* ─── 02 supply chain ─────────────────────────────────────── */
@@ -206,6 +262,9 @@ export default function StoryPage() {
           .sc-step { clip-path: none !important; }
           .sc[data-anim] .sc-step { transition: none !important; clip-path: none !important; }
           .st-ribbon-track { animation: none !important; }
+          .st-hero h1, .st-hero p { animation: none !important; clip-path: none !important; }
+          [data-wipe] { clip-path: none !important; transition: none !important; }
+          .st-meter-fill { transition: none !important; }
         }
 
         /* ─── ribbon ──────────────────────────────────────────────── */
@@ -412,6 +471,8 @@ export default function StoryPage() {
       `}</style>
 
       <div className="st">
+        <Reveal />
+
 
         {/* quick bar — above the hero in flow, so it never covers it */}
         <nav className="st-bar" aria-label="Pintasan">
@@ -464,12 +525,12 @@ export default function StoryPage() {
         {/* ─── 03 trust ─── */}
         <section className="st-trust" aria-labelledby="h-trust">
           <div className="st-wrap">
-            <h2 id="h-trust">{TRUST.heading}</h2>
-            <p>{TRUST.sub}</p>
+            <h2 id="h-trust" data-wipe="off">{TRUST.heading}</h2>
+            <p data-wipe="off" style={{ ["--i" as string]: 1 }}>{TRUST.sub}</p>
 
             <div className="st-codes">
-              {TRUST.items.map((it) => (
-                <div key={it.value} className="st-code">
+              {TRUST.items.map((it, i) => (
+                <div key={it.value} className="st-code" data-wipe="off" style={{ ["--i" as string]: i + 2 }}>
                   <span className="st-label">{it.label}</span>
                   <b>{it.value}</b>
                 </div>
@@ -485,10 +546,10 @@ export default function StoryPage() {
         {/* ─── 04 claims ─── */}
         <section className="st-claims" aria-label="Klaim">
           <div className="st-wrap">
-            <p className="lead">{CLAIMS.lead}</p>
+            <p className="lead" data-wipe="off">{CLAIMS.lead}</p>
             <p className="body">{CLAIMS.body}</p>
             <p className="note">{CLAIMS.note}</p>
-            <p className="msg">{CLAIMS.msg}</p>
+            <p className="msg" data-wipe="off">{CLAIMS.msg}</p>
           </div>
         </section>
 
@@ -525,7 +586,7 @@ export default function StoryPage() {
 
         {/* ─── 07 outro ─── */}
         <section className="st-outro" aria-labelledby="h-outro">
-          <h2 id="h-outro">{OUTRO.heading}</h2>
+          <h2 id="h-outro" data-wipe="off">{OUTRO.heading}</h2>
           <p>{OUTRO.body}</p>
           <a
             className="st-wa"

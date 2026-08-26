@@ -18,11 +18,16 @@ export const QUICK_BAR = {
 }
 
 // ─── 01 · Hero ────────────────────────────────────────────────────────────────
-// Foto ditaruh di /public/story/chicken.jpg. Duotone-nya dari CSS, bukan file —
+// Foto ditaruh di /public/story/chicken.jpg. Grade-nya dari CSS, bukan file —
 // ganti fotonya kapan saja tanpa edit ulang di Photoshop.
+//
+// Judulnya sengaja sama dengan yang tercetak di kemasan. Orang memegang kotak
+// bertulis "RAISED RIGHT.", memindai, lalu kalimat itu muncul lagi — halaman
+// ini melanjutkan kotaknya, bukan memperkenalkan diri dari nol.
 export const HERO = {
-  heading: 'KAMI TAU AYAMNYA DARI MANA',
-  sub: 'Cerita ayam di balik setiap kotak.',
+  kicker: 'Dipindai dari kotakmu',
+  heading: 'RAISED RIGHT.',
+  sub: 'Ayam yang baru kamu makan datang dari satu peternakan. Bukan campuran. Nomor sertifikatnya ada di bawah — silakan dicek.',
   image: {
     src: '/story/chicken.jpg',
     alt: 'Ayam putih hidup di peternakan',
@@ -62,11 +67,21 @@ export const TRUST = {
 }
 
 // ─── 04 · Klaim ───────────────────────────────────────────────────────────────
-// Bobotnya sengaja tidak seragam: `size` mengatur besar teksnya.
+// Bobotnya sengaja tidak seragam — yang keras dibaca dulu, sisanya menyusul.
+// Setiap klaim ayam di sini tercetak di kemasan ritel pemasok. Jangan tambah
+// klaim yang tidak ada di sana.
 export const CLAIMS = {
   lead: 'Tanpa antibiotik.',
-  body: 'Pakan berprebiotik dan probiotik — untuk pencernaan ayam yang lebih sehat. Dagingnya lebih padat, tidak berbau amis.',
+  leadSub: 'Dibesarkan tanpa antibiotik, dan itu tercetak di kemasan pemasoknya sendiri — bukan cuma kami yang bilang.',
+
+  body: 'Pakannya mengandung prebiotik dan probiotik. Pencernaan ayam yang lebih sehat menghasilkan daging yang lebih padat dan tidak berbau amis.',
   note: 'Ini soal cara ayamnya dibesarkan — bukan berarti dagingnya mengandung probiotik.',
+
+  // Nilai baru: butter di minyak cabainya.
+  butterLabel: 'Minyak cabai',
+  butter: 'Butter Elle & Vire.',
+  butterBody: 'Butter Prancis, bukan margarin. Itu yang bikin lapisan terakhirnya gurih, bukan cuma pedas.',
+
   msg: 'Tanpa MSG. Rasa datang dari bumbu, bukan penguat rasa.',
 }
 
@@ -80,14 +95,18 @@ export const REHEAT = {
 }
 
 // ─── 06 · Level pedas ─────────────────────────────────────────────────────────
-// Lvl 3 Hot dan Lvl 4 X-Hot menyusul.
-// JANGAN ditampilkan sekarang — keduanya belum ada di dapur.
+// Kelimanya sudah ada di dapur (dikonfirmasi 26 Agustus 2026), dan kemasan
+// mencetak "FIVE HEAT LEVEL — from No Spicy to X-Hot", jadi halaman ini harus
+// menampilkan kelimanya supaya tidak bertabrakan dengan kotaknya.
 export const SPICE = {
   heading: 'Level pedas',
+  sub: 'Dari No Spicy sampai X-Hot. Seberapa kuat kamu?',
   levels: [
     { label: 'Lvl 0', name: 'No Spicy' },
     { label: 'Lvl 1', name: 'Mild' },
     { label: 'Lvl 2', name: 'Medium' },
+    { label: 'Lvl 3', name: 'Hot' },
+    { label: 'Lvl 4', name: 'X-Hot' },
   ],
 }
 

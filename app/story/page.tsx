@@ -182,10 +182,28 @@ export default function StoryPage() {
           color: var(--paper);
           margin-bottom: 18px;
         }
+        /* A solid chip, not tinted text. Red type over the photo measured
+           1.18:1 and plain white only 4.31:1 where the scrim is weakest;
+           white on a red block is 5.94:1 no matter what the photo does —
+           and it echoes the SCAN ME chip printed on the box. */
+        .st-hero-kicker {
+          display: inline-block;
+          font-family: "JetBrains Mono", ui-monospace, monospace;
+          font-size: 10px;
+          font-weight: 700;
+          letter-spacing: .22em;
+          text-transform: uppercase;
+          color: var(--paper);
+          background: var(--red);
+          padding: 6px 10px;
+          margin-bottom: 16px;
+        }
         .st-hero p {
           font-family: "Inter Tight", system-ui, sans-serif;
-          font-size: 14px;
-          color: rgba(255,255,255,.72);
+          font-size: clamp(14px, 3.9vw, 17px);
+          line-height: 1.55;
+          color: rgba(255,255,255,.8);
+          max-width: 38ch;
         }
 
         /* Hero entrance — pure CSS so it runs at first paint with no JS and
@@ -343,6 +361,44 @@ export default function StoryPage() {
           text-transform: uppercase;
           margin-bottom: 30px;
         }
+        .st-claims .lead-sub {
+          font-family: "Inter Tight", system-ui, sans-serif;
+          font-size: clamp(15px, 4.2vw, 19px);
+          line-height: 1.55;
+          font-weight: 500;
+          max-width: 40ch;
+          margin-bottom: 34px;
+        }
+        /* The butter gets its own framed beat — it is the one thing here the
+           reader cannot check on a government register, so it earns a box
+           rather than another paragraph. */
+        .st-butter {
+          border-left: 3px solid var(--red);
+          padding: 2px 0 2px 18px;
+          margin: 0 0 40px;
+        }
+        .st-butter .st-label { display: block; color: rgba(26,26,26,.5); margin-bottom: 8px; }
+        .st-butter strong {
+          display: block;
+          font-family: "Archivo Black", system-ui, sans-serif;
+          font-size: clamp(22px, 6.2vw, 40px);
+          line-height: 1;
+          letter-spacing: -.025em;
+          margin-bottom: 10px;
+        }
+        .st-butter p {
+          font-family: "Inter Tight", system-ui, sans-serif;
+          font-size: 15px;
+          line-height: 1.6;
+          color: rgba(26,26,26,.72);
+          max-width: 38ch;
+        }
+        .st-spice-sub {
+          font-family: "Inter Tight", system-ui, sans-serif;
+          font-size: 14px;
+          color: rgba(26,26,26,.6);
+          margin: -8px 0 18px;
+        }
         .st-claims .body {
           font-family: "Inter Tight", system-ui, sans-serif;
           font-size: clamp(16px, 4.4vw, 20px);
@@ -496,6 +552,7 @@ export default function StoryPage() {
           </div>
           <div className="st-hero-text">
             <div className="st-wrap">
+              <span className="st-hero-kicker">{HERO.kicker}</span>
               <h1>{HERO.heading}</h1>
               <p>{HERO.sub}</p>
             </div>
@@ -547,8 +604,16 @@ export default function StoryPage() {
         <section className="st-claims" aria-label="Klaim">
           <div className="st-wrap">
             <p className="lead" data-wipe="off">{CLAIMS.lead}</p>
+            <p className="lead-sub">{CLAIMS.leadSub}</p>
             <p className="body">{CLAIMS.body}</p>
             <p className="note">{CLAIMS.note}</p>
+
+            <div className="st-butter" data-wipe="off">
+              <span className="st-label">{CLAIMS.butterLabel}</span>
+              <strong>{CLAIMS.butter}</strong>
+              <p>{CLAIMS.butterBody}</p>
+            </div>
+
             <p className="msg" data-wipe="off">{CLAIMS.msg}</p>
           </div>
         </section>
@@ -568,13 +633,15 @@ export default function StoryPage() {
           <div className="st-wrap">
             <span className="st-label">06</span>
             <h2 id="h-spice">{SPICE.heading}</h2>
+            <p className="st-spice-sub">{SPICE.sub}</p>
             <div className="st-levels">
               {SPICE.levels.map((l, i) => (
                 <div key={l.label} className="st-lvl">
                   <i>{l.label}</i>
                   <b>{l.name}</b>
+                  {/* One bar per step above zero, filled up to this level. */}
                   <span className="st-meter" aria-hidden="true">
-                    {[0, 1, 2].map((n) => (
+                    {Array.from({ length: SPICE.levels.length - 1 }, (_, n) => (
                       <span key={n} data-on={n < i ? '1' : '0'} />
                     ))}
                   </span>

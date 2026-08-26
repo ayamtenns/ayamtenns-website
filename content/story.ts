@@ -82,15 +82,28 @@ export const CLAIMS = {
   butter: 'Butter Elle & Vire.',
   butterBody: 'Butter Prancis, bukan margarin. Itu yang bikin lapisan terakhirnya gurih, bukan cuma pedas.',
 
+  // Keempatnya tercetak di kemasan ritel pemasok. Atribusinya wajib ikut —
+  // ini kutipan label mereka, bukan hasil uji kami.
+  specLabel: 'Tercetak di kemasan pemasoknya',
+  specs: [
+    'Tanpa hormon',
+    'Tanpa steroid',
+    'Tanpa formalin',
+    'Diproses dengan air tersaring',
+  ],
+
   msg: 'Tanpa MSG. Rasa datang dari bumbu, bukan penguat rasa.',
 }
 
 // ─── 05 · Cara panasin ulang ──────────────────────────────────────────────────
-// PENTING: angka suhu dan durasi BELUM diuji. Jangan diisi sampai benar-benar
-// dites di dapur — menebak angka di sini menyesatkan pelanggan.
+// Angka oven di bawah SUDAH dites di dapur (untuk ayamnya saja).
+// Set lengkap dengan nasi dan telur BELUM dites — jangan karang angkanya,
+// nasi dan telur butuh perlakuan berbeda dari ayam.
 export const REHEAT = {
   heading: 'Cara panasin ulang',
-  placeholder: '[SUHU] · [DURASI] — belum diisi',
+  methodLabel: 'Oven',
+  setting: '170°C · 5–7 menit',
+  methodNote: 'Untuk ayamnya. Set lengkap dengan nasi dan telur belum kami tes — kami tes dulu sebelum kasih angka.',
   final: 'Jangan microwave. Serius.',
 }
 

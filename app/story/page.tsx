@@ -436,14 +436,44 @@ export default function StoryPage() {
           text-transform: uppercase;
           margin-bottom: 18px;
         }
-        .st-slot {
-          border: 2px dashed rgba(26,26,26,.4);
-          padding: 18px;
-          text-align: center;
-          font-family: "JetBrains Mono", ui-monospace, monospace;
-          font-size: 12px;
-          letter-spacing: .08em;
-          color: rgba(26,26,26,.55);
+        /* Tested figure — set solid, not as a placeholder slot. */
+        .st-reheat { border: 2px solid var(--ink); padding: 18px; }
+        .st-reheat .st-label { display: block; color: rgba(26,26,26,.5); margin-bottom: 8px; }
+        .st-reheat strong {
+          display: block;
+          font-family: "Archivo Black", system-ui, sans-serif;
+          font-size: clamp(24px, 7vw, 40px);
+          letter-spacing: -.025em;
+          line-height: 1;
+          margin-bottom: 10px;
+        }
+        .st-reheat p {
+          font-family: "Inter Tight", system-ui, sans-serif;
+          font-size: 14px;
+          line-height: 1.55;
+          color: rgba(26,26,26,.65);
+          max-width: 40ch;
+        }
+
+        /* Spec strip — reads like the label it was lifted from. */
+        .st-specs { margin: 0 0 40px; }
+        .st-specs .st-label { display: block; color: rgba(26,26,26,.5); margin-bottom: 12px; }
+        .st-specs ul {
+          list-style: none;
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          border-top: 1px solid var(--ink);
+          border-left: 1px solid var(--ink);
+        }
+        .st-specs li {
+          border-right: 1px solid var(--ink);
+          border-bottom: 1px solid var(--ink);
+          padding: 14px 12px;
+          font-family: "Archivo Black", system-ui, sans-serif;
+          font-size: clamp(12px, 3.4vw, 15px);
+          letter-spacing: -.01em;
+          text-transform: uppercase;
+          line-height: 1.15;
         }
         .st-final {
           display: block;
@@ -614,6 +644,15 @@ export default function StoryPage() {
               <p>{CLAIMS.butterBody}</p>
             </div>
 
+            <div className="st-specs">
+              <span className="st-label">{CLAIMS.specLabel}</span>
+              <ul>
+                {CLAIMS.specs.map((sp) => (
+                  <li key={sp}>{sp}</li>
+                ))}
+              </ul>
+            </div>
+
             <p className="msg" data-wipe="off">{CLAIMS.msg}</p>
           </div>
         </section>
@@ -623,7 +662,11 @@ export default function StoryPage() {
           <div className="st-wrap">
             <span className="st-label">05</span>
             <h2 id="h-reheat">{REHEAT.heading}</h2>
-            <div className="st-slot">{REHEAT.placeholder}</div>
+            <div className="st-reheat">
+              <span className="st-label">{REHEAT.methodLabel}</span>
+              <strong>{REHEAT.setting}</strong>
+              <p>{REHEAT.methodNote}</p>
+            </div>
             <strong className="st-final">{REHEAT.final}</strong>
           </div>
         </section>
